@@ -4,197 +4,606 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#050D18">
+    android:background="#04101D">
 
-    <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent">
-        <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
-            android:scaleType="centerCrop" android:src="@drawable/saman_map_bg" android:contentDescription="@null"/>
-        <View android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/bg_saman_overlay"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
-            android:fitsSystemWindows="true" android:orientation="vertical">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            android:src="@drawable/saman_map_bg" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_v04_overlay" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:orientation="vertical">
 
             <com.google.android.material.appbar.AppBarLayout
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:background="@android:color/transparent" app:elevation="0dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                app:elevation="0dp">
+
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:background="@android:color/transparent"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
                     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                    app:titleTextColor="#F5FBFF"/>
+                    app:titleTextColor="#F5FCFF" />
             </com.google.android.material.appbar.AppBarLayout>
 
             <com.google.android.material.progressindicator.LinearProgressIndicator
-                android:id="@+id/progress_bar" android:layout_width="match_parent"
-                android:layout_height="3dp" android:indeterminate="true"
-                android:visibility="invisible" app:indicatorColor="#3EF0D4" app:trackColor="#17364A"/>
+                android:id="@+id/progress_bar"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:indeterminate="true"
+                android:visibility="invisible"
+                app:indicatorColor="#47F2D2"
+                app:trackColor="#16384A" />
 
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/main_scroll"
-                android:layout_width="match_parent" android:layout_height="0dp"
-                android:layout_weight="1" android:clipToPadding="false"
-                android:fillViewport="true" android:paddingStart="18dp"
-                android:paddingEnd="18dp" android:paddingBottom="18dp">
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:clipToPadding="false"
+                android:fillViewport="true"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="22dp">
 
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:gravity="center_horizontal" android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp" android:background="@drawable/bg_glass_card"
-                        android:gravity="center_vertical" android:orientation="horizontal" android:padding="14dp">
-                        <ImageView android:layout_width="58dp" android:layout_height="58dp"
-                            android:src="@drawable/ic_glass_shield" android:contentDescription="@null"/>
-                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                            android:layout_weight="1" android:layout_marginStart="10dp" android:orientation="vertical">
-                            <TextView android:id="@+id/tv_connection_title"
-                                android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:text="آماده اتصال" android:textColor="#52F5D9"
-                                android:textSize="22sp" android:textStyle="bold"/>
-                            <TextView android:id="@+id/tv_connection_subtitle"
-                                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/status_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/bg_v04_status"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="14dp">
+
+                        <ImageView
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_glass_shield" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_connection_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="آماده اتصال"
+                                android:textColor="#55F5D9"
+                                android:textSize="22sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_connection_subtitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_marginTop="3dp"
-                                android:text="یک سرور انتخاب کن و دکمه وسط را بزن"
-                                android:textColor="#BFD1DC" android:textSize="13sp"/>
+                                android:text="سرور را انتخاب کن و دکمه اتصال را بزن"
+                                android:textColor="#C5D7E1"
+                                android:textSize="13sp" />
                         </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_status_badge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_v04_badge_idle"
+                            android:paddingStart="12dp"
+                            android:paddingTop="7dp"
+                            android:paddingEnd="12dp"
+                            android:paddingBottom="7dp"
+                            android:text="قطع"
+                            android:textColor="#D2E1E8"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
-                    <FrameLayout android:layout_width="match_parent" android:layout_height="330dp" android:layout_marginTop="4dp">
-                        <ImageView android:id="@+id/map_marker" android:layout_width="78dp" android:layout_height="78dp"
-                            android:layout_gravity="top|center_horizontal" android:layout_marginTop="64dp"
-                            android:src="@drawable/ic_glass_pin" android:contentDescription="@null"/>
-                        <View android:id="@+id/pulse_ring" android:layout_width="170dp" android:layout_height="170dp"
-                            android:layout_gravity="center" android:background="@drawable/bg_pulse_ring"/>
+                    <FrameLayout
+                        android:id="@+id/map_stage"
+                        android:layout_width="match_parent"
+                        android:layout_height="315dp"
+                        android:layout_marginTop="2dp">
+
+                        <View
+                            android:id="@+id/connection_route"
+                            android:layout_width="220dp"
+                            android:layout_height="5dp"
+                            android:layout_gravity="center"
+                            android:translationY="-62dp"
+                            android:alpha="0"
+                            android:background="@drawable/bg_v04_route"
+                            android:rotation="-63" />
+
+                        <View
+                            android:id="@+id/country_pulse"
+                            android:layout_width="112dp"
+                            android:layout_height="112dp"
+                            android:layout_gravity="top|center_horizontal"
+                            android:layout_marginTop="48dp"
+                            android:alpha="0"
+                            android:background="@drawable/bg_v04_country_pulse" />
+
+                        <ImageView
+                            android:id="@+id/map_marker"
+                            android:layout_width="78dp"
+                            android:layout_height="78dp"
+                            android:layout_gravity="top|center_horizontal"
+                            android:layout_marginTop="65dp"
+                            android:alpha="0.70"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_glass_pin" />
+
+                        <View
+                            android:id="@+id/pulse_ring"
+                            android:layout_width="184dp"
+                            android:layout_height="184dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/bg_pulse_ring" />
+
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/fab" android:layout_width="138dp" android:layout_height="138dp"
-                            android:layout_gravity="center" android:backgroundTint="#123E4C"
-                            android:clickable="true" android:contentDescription="@string/tasker_start_service"
-                            android:focusable="true" android:src="@drawable/ic_glass_power"
-                            app:borderWidth="0dp" app:elevation="14dp" app:fabCustomSize="138dp"
-                            app:maxImageSize="96dp" app:rippleColor="#5CFFFFFF" app:tint="@null"/>
+                            android:id="@+id/fab"
+                            android:layout_width="146dp"
+                            android:layout_height="146dp"
+                            android:layout_gravity="center"
+                            android:backgroundTint="#153F4D"
+                            android:clickable="true"
+                            android:contentDescription="@string/tasker_start_service"
+                            android:focusable="true"
+                            android:src="@drawable/ic_glass_power"
+                            app:borderWidth="0dp"
+                            app:elevation="16dp"
+                            app:fabCustomSize="146dp"
+                            app:maxImageSize="100dp"
+                            app:rippleColor="#66FFFFFF"
+                            app:tint="@null" />
+
+                        <TextView
+                            android:id="@+id/tv_connect_action"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|center_horizontal"
+                            android:layout_marginBottom="13dp"
+                            android:background="@drawable/bg_v04_connect_label"
+                            android:paddingStart="22dp"
+                            android:paddingTop="9dp"
+                            android:paddingEnd="22dp"
+                            android:paddingBottom="9dp"
+                            android:text="اتصال"
+                            android:textColor="#F2FEFF"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
                     </FrameLayout>
 
-                    <LinearLayout android:id="@+id/layout_test" android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:background="@drawable/bg_glass_card"
-                        android:clickable="true" android:focusable="true" android:gravity="center"
-                        android:orientation="horizontal" android:paddingStart="20dp" android:paddingTop="9dp"
-                        android:paddingEnd="20dp" android:paddingBottom="9dp">
-                        <View android:layout_width="9dp" android:layout_height="9dp" android:background="@drawable/bg_pulse_ring"/>
-                        <TextView android:id="@+id/tv_test_state" android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" android:layout_marginStart="9dp"
-                            android:text="@string/connection_test_pending" android:textColor="#E6F7FA" android:textSize="14sp"/>
-                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/location_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_v04_card"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="14dp">
 
-                    <LinearLayout android:id="@+id/location_card" android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:layout_marginTop="18dp"
-                        android:background="@drawable/bg_glass_card" android:clickable="true"
-                        android:focusable="true" android:gravity="center_vertical"
-                        android:orientation="horizontal" android:padding="14dp">
-                        <TextView android:id="@+id/tv_flag" android:layout_width="56dp" android:layout_height="56dp"
-                            android:gravity="center" android:text="🌐" android:textSize="35sp"/>
-                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                            android:layout_weight="1" android:layout_marginStart="10dp" android:orientation="vertical">
-                            <TextView android:id="@+id/tv_country" android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" android:text="سرور انتخابی"
-                                android:textColor="#9FB6C4" android:textSize="13sp"/>
-                            <TextView android:id="@+id/tv_server_name" android:layout_width="match_parent"
-                                android:layout_height="wrap_content" android:ellipsize="end" android:maxLines="1"
-                                android:text="هنوز سروری انتخاب نشده" android:textColor="#FFFFFF"
-                                android:textSize="18sp" android:textStyle="bold"/>
-                            <TextView android:id="@+id/tv_protocol" android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" android:layout_marginTop="3dp"
-                                android:text="پروتکل: —" android:textColor="#51E8D1" android:textSize="12sp"/>
+                        <TextView
+                            android:id="@+id/tv_flag"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:gravity="center"
+                            android:text="🌐"
+                            android:textSize="38sp" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_country"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="سرور انتخابی"
+                                android:textColor="#9DB5C3"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:id="@+id/tv_server_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="هنوز سروری انتخاب نشده"
+                                android:textColor="#FFFFFF"
+                                android:textSize="19sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_protocol"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:text="پروتکل: —"
+                                android:textColor="#4AE8CE"
+                                android:textSize="12sp" />
                         </LinearLayout>
-                        <ImageButton android:id="@+id/btn_import_config" android:layout_width="58dp"
-                            android:layout_height="58dp" android:background="@android:color/transparent"
-                            android:contentDescription="ورود کانفیگ از کلیپ‌بورد" android:padding="2dp"
-                            android:src="@drawable/ic_glass_import"/>
+
+                        <LinearLayout
+                            android:id="@+id/layout_test"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_v04_ping"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingStart="12dp"
+                            android:paddingTop="8dp"
+                            android:paddingEnd="12dp"
+                            android:paddingBottom="8dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="پینگ"
+                                android:textColor="#91AAB8"
+                                android:textSize="10sp" />
+
+                            <TextView
+                                android:id="@+id/tv_current_ping"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="-- ms"
+                                android:textColor="#54F0D5"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_test_state"
+                                android:layout_width="1dp"
+                                android:layout_height="1dp"
+                                android:visibility="invisible" />
+                        </LinearLayout>
+
+                        <ImageButton
+                            android:id="@+id/btn_import_config"
+                            android:layout_width="1dp"
+                            android:layout_height="1dp"
+                            android:background="@android:color/transparent"
+                            android:contentDescription="@null"
+                            android:visibility="gone" />
                     </LinearLayout>
 
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp" android:background="@drawable/bg_glass_card"
-                        android:gravity="center" android:orientation="horizontal" android:padding="10dp">
-                        <TextView android:id="@+id/tv_security" android:layout_width="0dp"
-                            android:layout_height="wrap_content" android:layout_weight="1"
-                            android:gravity="center" android:text="🛡 حفاظت آماده"
-                            android:textColor="#D9EAF0" android:textSize="13sp"/>
-                        <TextView android:layout_width="1dp" android:layout_height="30dp" android:background="#38657B8B"/>
-                        <TextView android:id="@+id/tv_privacy" android:layout_width="0dp"
-                            android:layout_height="wrap_content" android:layout_weight="1"
-                            android:gravity="center" android:text="🔒 حریم خصوصی"
-                            android:textColor="#D9EAF0" android:textSize="13sp"/>
+                    <LinearLayout
+                        android:id="@+id/btn_add_config"
+                        android:layout_width="match_parent"
+                        android:layout_height="58dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/bg_v04_add"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="38dp"
+                            android:layout_height="38dp"
+                            android:gravity="center"
+                            android:text="+"
+                            android:textColor="#FFFFFF"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="افزودن کانفیگ"
+                            android:textColor="#FFFFFF"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
-                    <LinearLayout android:id="@+id/server_panel" android:layout_width="match_parent"
-                        android:layout_height="410dp" android:layout_marginTop="16dp"
-                        android:background="@drawable/bg_server_panel" android:orientation="vertical"
-                        android:padding="8dp" android:visibility="gone">
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                            android:padding="10dp" android:text="انتخاب سرور"
-                            android:textColor="#FFFFFF" android:textSize="18sp" android:textStyle="bold"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/bg_v04_card"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="11dp">
+
+                        <TextView
+                            android:id="@+id/tv_security"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="🛡 حفاظت آماده"
+                            android:textColor="#DDECF2"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:layout_width="1dp"
+                            android:layout_height="30dp"
+                            android:background="#3D648092" />
+
+                        <TextView
+                            android:id="@+id/tv_privacy"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="🔒 حریم خصوصی"
+                            android:textColor="#DDECF2"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/server_panel"
+                        android:layout_width="match_parent"
+                        android:layout_height="520dp"
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/bg_v04_server_panel"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="6dp"
+                                android:text="سرورها"
+                                android:textColor="#FFFFFF"
+                                android:textSize="21sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/btn_ping_all"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_v04_small_button"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:paddingStart="11dp"
+                                android:paddingTop="8dp"
+                                android:paddingEnd="11dp"
+                                android:paddingBottom="8dp"
+                                android:text="تست پینگ"
+                                android:textColor="#EAF9FC"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/btn_sort_ping"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="7dp"
+                                android:background="@drawable/bg_v04_small_button"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:paddingStart="11dp"
+                                android:paddingTop="8dp"
+                                android:paddingEnd="11dp"
+                                android:paddingBottom="8dp"
+                                android:text="سریع‌ترین"
+                                android:textColor="#EAF9FC"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/btn_update_sub"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="7dp"
+                                android:background="@drawable/bg_v04_small_button"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:paddingStart="11dp"
+                                android:paddingTop="8dp"
+                                android:paddingEnd="11dp"
+                                android:paddingBottom="8dp"
+                                android:text="به‌روزرسانی"
+                                android:textColor="#EAF9FC"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
                         <com.google.android.material.tabs.TabLayout
-                            android:id="@+id/tab_group" android:layout_width="match_parent"
-                            android:layout_height="wrap_content" app:tabIndicatorColor="#3EF0D4"
-                            app:tabIndicatorFullWidth="false" app:tabMode="scrollable"
-                            app:tabTextColor="#91A9B8" app:tabSelectedTextColor="#FFFFFF"/>
+                            android:id="@+id/tab_group"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:background="@android:color/transparent"
+                            app:tabIndicatorColor="#47F2D2"
+                            app:tabIndicatorFullWidth="false"
+                            app:tabMode="scrollable"
+                            app:tabSelectedTextColor="#FFFFFF"
+                            app:tabTextColor="#A1B5C1" />
+
                         <androidx.viewpager2.widget.ViewPager2
-                            android:id="@+id/view_pager" android:layout_width="match_parent"
-                            android:layout_height="0dp" android:layout_weight="1" android:scrollbars="vertical"/>
+                            android:id="@+id/view_pager"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:background="@android:color/transparent"
+                            android:scrollbars="vertical" />
                     </LinearLayout>
-                    <Space android:layout_width="1dp" android:layout_height="24dp"/>
+
+                    <Space
+                        android:layout_width="1dp"
+                        android:layout_height="22dp" />
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="88dp"
-                android:background="@drawable/bg_glass_nav" android:gravity="center"
-                android:orientation="horizontal" android:paddingStart="7dp" android:paddingEnd="7dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="92dp"
+                android:background="@drawable/bg_v04_bottom_nav"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp">
 
-                <LinearLayout android:id="@+id/btn_home" android:layout_width="0dp"
-                    android:layout_height="match_parent" android:layout_weight="1"
-                    android:clickable="true" android:focusable="true" android:gravity="center"
+                <LinearLayout
+                    android:id="@+id/btn_home"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
                     android:orientation="vertical">
-                    <ImageView android:layout_width="48dp" android:layout_height="48dp"
-                        android:src="@drawable/ic_glass_home" android:contentDescription="@null"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="خانه" android:textColor="#4EF0D3" android:textSize="12sp"/>
+                    <ImageView
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_glass_home" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="خانه"
+                        android:textColor="#4EF0D3"
+                        android:textSize="11sp" />
                 </LinearLayout>
 
-                <LinearLayout android:id="@+id/btn_servers" android:layout_width="0dp"
-                    android:layout_height="match_parent" android:layout_weight="1"
-                    android:clickable="true" android:focusable="true" android:gravity="center"
+                <LinearLayout
+                    android:id="@+id/btn_servers"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
                     android:orientation="vertical">
-                    <ImageView android:layout_width="48dp" android:layout_height="48dp"
-                        android:src="@drawable/ic_glass_countries" android:contentDescription="@null"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="سرورها" android:textColor="#B8C8D2" android:textSize="12sp"/>
+                    <ImageView
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_glass_countries" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="سرورها"
+                        android:textColor="#B8CAD4"
+                        android:textSize="11sp" />
                 </LinearLayout>
 
-                <LinearLayout android:id="@+id/btn_connection_type" android:layout_width="0dp"
-                    android:layout_height="match_parent" android:layout_weight="1"
-                    android:clickable="true" android:focusable="true" android:gravity="center"
+                <LinearLayout
+                    android:id="@+id/btn_add_nav"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.12"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
                     android:orientation="vertical">
-                    <ImageView android:layout_width="48dp" android:layout_height="48dp"
-                        android:src="@drawable/ic_glass_type" android:contentDescription="@null"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="نوع اتصال" android:textColor="#B8C8D2" android:textSize="12sp"/>
+                    <TextView
+                        android:layout_width="54dp"
+                        android:layout_height="54dp"
+                        android:background="@drawable/bg_v04_add_nav"
+                        android:gravity="center"
+                        android:text="+"
+                        android:textColor="#FFFFFF"
+                        android:textSize="34sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="افزودن"
+                        android:textColor="#56F0D7"
+                        android:textSize="11sp" />
                 </LinearLayout>
 
-                <LinearLayout android:id="@+id/btn_settings" android:layout_width="0dp"
-                    android:layout_height="match_parent" android:layout_weight="1"
-                    android:clickable="true" android:focusable="true" android:gravity="center"
+                <LinearLayout
+                    android:id="@+id/btn_connection_type"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
                     android:orientation="vertical">
-                    <ImageView android:layout_width="48dp" android:layout_height="48dp"
-                        android:src="@drawable/ic_glass_settings" android:contentDescription="@null"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="تنظیمات" android:textColor="#B8C8D2" android:textSize="12sp"/>
+                    <ImageView
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_glass_type" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="نوع اتصال"
+                        android:textColor="#B8CAD4"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btn_settings"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_glass_settings" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="تنظیمات"
+                        android:textColor="#B8CAD4"
+                        android:textSize="11sp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>
 
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view" android:layout_width="wrap_content"
-        android:layout_height="match_parent" android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header" app:menu="@menu/menu_drawer"/>
+        android:id="@+id/nav_view"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:visibility="gone"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/menu_drawer" />
 </androidx.drawerlayout.widget.DrawerLayout>
