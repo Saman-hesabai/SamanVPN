@@ -1,6 +1,10 @@
 package com.v2ray.ang.ui
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Intent
+import android.view.View
+import android.view.animation.DecelerateInterpolator
 import android.content.res.ColorStateList
 import android.net.Uri
 import android.net.VpnService
@@ -50,6 +54,7 @@ class MainActivity : HelperBaseActivity(), NavigationView.OnNavigationItemSelect
     val mainViewModel: MainViewModel by viewModels()
     private lateinit var groupPagerAdapter: GroupPagerAdapter
     private var tabMediator: TabLayoutMediator? = null
+    private var pulseAnimator: AnimatorSet? = null
 
     private val requestVpnPermission = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == RESULT_OK) {
@@ -84,10 +89,153 @@ class MainActivity : HelperBaseActivity(), NavigationView.OnNavigationItemSelect
 
         setupGroupTab()
         setupViewModel()
+        setupSamanHome()
         SubscriptionUpdater.sync()
         mainViewModel.reloadServerList()
 
         checkAndRequestPermission(PermissionType.POST_NOTIFICATIONS) {
+        }
+    }
+
+
+    private fun setupSamanHome() {
+        binding.btnHome.setOnClickListener {
+            binding.serverPanel.visibility = View.GONE
+            binding.mainScroll.smoothScrollTo(0, 0)
+            animateNavTap(binding.btnHome)
+            updateSelectedServerCard()
+        }
+        binding.btnServers.setOnClickListener {
+            binding.serverPanel.visibility =
+                if (binding.serverPanel.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+            binding.mainScroll.post {
+                binding.mainScroll.smoothScrollTo(0, binding.serverPanel.top)
+            }
+            animateNavTap(binding.btnServers)
+            updateSelectedServerCard()
+        }
+        binding.locationCard.setOnClickListener {
+            binding.serverPanel.visibility = View.VISIBLE
+            binding.mainScroll.post {
+                binding.mainScroll.smoothScrollTo(0, binding.serverPanel.top)
+            }
+        }
+        binding.btnConnectionType.setOnClickListener {
+            animateNavTap(binding.btnConnectionType)
+            requestActivityLauncher.launch(Intent(this, PerAppProxyActivity::class.java))
+        }
+        binding.btnSettings.setOnClickListener {
+            animateNavTap(binding.btnSettings)
+            requestActivityLauncher.launch(Intent(this, SettingsActivity::class.java))
+        }
+        binding.btnImportConfig.setOnClickListener {
+            animateNavTap(binding.btnImportConfig)
+            importClipboard()
+        }
+        updateSelectedServerCard()
+        startPulseAnimation(false)
+    }
+
+    private fun animateNavTap(view: View) {
+        view.animate().cancel()
+        view.scaleX = 0.92f
+        view.scaleY = 0.92f
+        view.animate().scaleX(1f).scaleY(1f).setDuration(230L)
+            .setInterpolator(DecelerateInterpolator()).start()
+    }
+
+    private fun updateSelectedServerCard() {
+        val guid = MmkvManager.getSelectServer().orEmpty()
+        val profile = MmkvManager.decodeServerConfig(guid)
+        val remarks = profile?.remarks?.ifBlank { profile.server.orEmpty() }.orEmpty()
+        if (remarks.isBlank()) {
+            binding.tvServerName.text = "هنوز سروری انتخاب نشده"
+            binding.tvCountry.text = "سرور انتخابی"
+            binding.tvFlag.text = "🌐"
+            binding.tvProtocol.text = "پروتکل: —"
+            return
+        }
+        val location = detectLocation(remarks)
+        binding.tvServerName.text = remarks
+        binding.tvCountry.text = location.first
+        binding.tvFlag.text = location.second
+        binding.tvProtocol.text = "پروتکل: ${profile?.configType?.name ?: "—"}"
+
+        val shift = detectMarkerShift(remarks)
+        val density = resources.displayMetrics.density
+        binding.mapMarker.animate()
+            .translationX(shift.first * density)
+            .translationY(shift.second * density)
+            .setDuration(500L)
+            .setInterpolator(DecelerateInterpolator())
+            .start()
+    }
+
+    private fun detectMarkerShift(value: String): Pair<Float, Float> {
+        val text = value.lowercase()
+        return when {
+            "🇧🇪" in value || "belgium" in text || "بلژیک" in text -> 0f to 0f
+            "🇩🇪" in value || "germany" in text || "آلمان" in text -> 34f to -8f
+            "🇳🇱" in value || "netherlands" in text || "هلند" in text -> -18f to -15f
+            "🇫🇷" in value || "france" in text || "فرانسه" in text -> -38f to 25f
+            "🇬🇧" in value || "england" in text || "london" in text || "انگلیس" in text -> -70f to -30f
+            "🇺🇸" in value || "usa" in text || "america" in text || "آمریکا" in text -> -112f to 65f
+            "🇨🇦" in value || "canada" in text || "کانادا" in text -> -102f to 18f
+            "🇫🇮" in value || "finland" in text || "فنلاند" in text -> 72f to -55f
+            "🇸🇪" in value || "sweden" in text || "سوئد" in text -> 48f to -48f
+            "🇹🇷" in value || "turkey" in text || "ترکیه" in text -> 82f to 52f
+            "🇦🇪" in value || "emirates" in text || "dubai" in text || "امارات" in text -> 112f to 82f
+            "🇸🇬" in value || "singapore" in text || "سنگاپور" in text -> 105f to 120f
+            "🇯🇵" in value || "japan" in text || "tokyo" in text || "ژاپن" in text -> 125f to 25f
+            else -> 0f to 0f
+        }
+    }
+
+    private fun detectLocation(value: String): Pair<String, String> {
+        val text = value.lowercase()
+        return when {
+            "🇧🇪" in value || "belgium" in text || "بلژیک" in text -> "بلژیک" to "🇧🇪"
+            "🇩🇪" in value || "germany" in text || "deutsch" in text || "آلمان" in text -> "آلمان" to "🇩🇪"
+            "🇳🇱" in value || "netherlands" in text || "holland" in text || "هلند" in text -> "هلند" to "🇳🇱"
+            "🇫🇷" in value || "france" in text || "فرانسه" in text -> "فرانسه" to "🇫🇷"
+            "🇬🇧" in value || "united kingdom" in text || "england" in text || "london" in text || "انگلیس" in text -> "بریتانیا" to "🇬🇧"
+            "🇺🇸" in value || "united states" in text || "usa" in text || "america" in text || "آمریکا" in text -> "آمریکا" to "🇺🇸"
+            "🇨🇦" in value || "canada" in text || "کانادا" in text -> "کانادا" to "🇨🇦"
+            "🇫🇮" in value || "finland" in text || "فنلاند" in text -> "فنلاند" to "🇫🇮"
+            "🇸🇪" in value || "sweden" in text || "سوئد" in text -> "سوئد" to "🇸🇪"
+            "🇹🇷" in value || "turkey" in text || "ترکیه" in text -> "ترکیه" to "🇹🇷"
+            "🇦🇪" in value || "emirates" in text || "dubai" in text || "امارات" in text -> "امارات" to "🇦🇪"
+            "🇸🇬" in value || "singapore" in text || "سنگاپور" in text -> "سنگاپور" to "🇸🇬"
+            "🇯🇵" in value || "japan" in text || "tokyo" in text || "ژاپن" in text -> "ژاپن" to "🇯🇵"
+            else -> "موقعیت سرور" to "🌐"
+        }
+    }
+
+    private fun startPulseAnimation(connected: Boolean) {
+        pulseAnimator?.cancel()
+        val scaleTo = if (connected) 1.34f else 1.20f
+        val duration = if (connected) 1250L else 1850L
+        val sx = ObjectAnimator.ofFloat(binding.pulseRing, View.SCALE_X, 0.92f, scaleTo).apply {
+            this.duration = duration
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.RESTART
+        }
+        val sy = ObjectAnimator.ofFloat(binding.pulseRing, View.SCALE_Y, 0.92f, scaleTo).apply {
+            this.duration = duration
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.RESTART
+        }
+        val alpha = ObjectAnimator.ofFloat(
+            binding.pulseRing, View.ALPHA,
+            if (connected) 0.72f else 0.42f, 0.04f
+        ).apply {
+            this.duration = duration
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.RESTART
+        }
+        pulseAnimator = AnimatorSet().apply {
+            playTogether(sx, sy, alpha)
+            start()
         }
     }
 
@@ -218,27 +366,44 @@ class MainActivity : HelperBaseActivity(), NavigationView.OnNavigationItemSelect
 
     private fun applyRunningState(isLoading: Boolean, isRunning: Boolean) {
         if (isLoading) {
-            binding.fab.setImageResource(R.drawable.ic_fab_check)
+            binding.fab.setImageResource(R.drawable.ic_glass_power)
+            binding.tvConnectionTitle.text = "در حال اتصال…"
+            binding.tvConnectionSubtitle.text = "چند لحظه صبر کن"
             return
         }
-
+        updateSelectedServerCard()
         if (isRunning) {
-            binding.fab.setImageResource(R.drawable.ic_stop_24dp)
-            binding.fab.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.color_fab_active))
+            binding.fab.setImageResource(R.drawable.ic_glass_power)
+            binding.fab.backgroundTintList =
+                ColorStateList.valueOf(ContextCompat.getColor(this, R.color.color_fab_active))
             binding.fab.contentDescription = getString(R.string.action_stop_service)
-            setTestState(getString(R.string.connection_connected))
+            setTestState("اتصال برقرار است")
+            binding.tvConnectionTitle.text = "محافظت شده"
+            binding.tvConnectionSubtitle.text = "اتصال شما امن و خصوصی است"
+            binding.tvSecurity.text = "🛡 حفاظت فعال"
+            binding.tvPrivacy.text = "🔒 مرور خصوصی فعال"
             binding.layoutTest.isFocusable = true
+            binding.mapMarker.animate().alpha(1f).scaleX(1f).scaleY(1f).setDuration(350L).start()
+            startPulseAnimation(true)
         } else {
-            binding.fab.setImageResource(R.drawable.ic_play_24dp)
-            binding.fab.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.color_fab_inactive))
+            binding.fab.setImageResource(R.drawable.ic_glass_power)
+            binding.fab.backgroundTintList =
+                ColorStateList.valueOf(ContextCompat.getColor(this, R.color.color_fab_inactive))
             binding.fab.contentDescription = getString(R.string.tasker_start_service)
-            setTestState(getString(R.string.connection_not_connected))
+            setTestState("برای اتصال دکمه وسط را بزن")
+            binding.tvConnectionTitle.text = "آماده اتصال"
+            binding.tvConnectionSubtitle.text = "یک سرور انتخاب کن و دکمه وسط را بزن"
+            binding.tvSecurity.text = "🛡 حفاظت آماده"
+            binding.tvPrivacy.text = "🔒 حریم خصوصی"
             binding.layoutTest.isFocusable = false
+            binding.mapMarker.animate().alpha(0.72f).scaleX(0.92f).scaleY(0.92f).setDuration(350L).start()
+            startPulseAnimation(false)
         }
     }
 
     override fun onResume() {
         super.onResume()
+        updateSelectedServerCard()
     }
 
     override fun onPause() {
@@ -690,6 +855,7 @@ class MainActivity : HelperBaseActivity(), NavigationView.OnNavigationItemSelect
     }
 
     override fun onDestroy() {
+        pulseAnimator?.cancel()
         tabMediator?.detach()
         super.onDestroy()
     }

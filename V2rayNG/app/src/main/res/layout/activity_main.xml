@@ -3,128 +3,198 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#050D18">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        android:orientation="vertical">
+    <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent">
+        <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
+            android:scaleType="centerCrop" android:src="@drawable/saman_map_bg" android:contentDescription="@null"/>
+        <View android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/bg_saman_overlay"/>
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+            android:fitsSystemWindows="true" android:orientation="vertical">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize" />
-
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.coordinatorlayout.widget.CoordinatorLayout
-                android:id="@+id/main_content"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <LinearLayout
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:background="@android:color/transparent" app:elevation="0dp">
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@android:color/transparent"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    app:titleTextColor="#F5FBFF"/>
+            </com.google.android.material.appbar.AppBarLayout>
 
-                    <com.google.android.material.progressindicator.LinearProgressIndicator
-                        android:id="@+id/progress_bar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:indeterminate="true"
-                        android:visibility="invisible"
-                        app:indicatorColor="@color/color_fab_active" />
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/progress_bar" android:layout_width="match_parent"
+                android:layout_height="3dp" android:indeterminate="true"
+                android:visibility="invisible" app:indicatorColor="#3EF0D4" app:trackColor="#17364A"/>
 
-                    <com.google.android.material.tabs.TabLayout
-                        android:id="@+id/tab_group"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:tabIndicatorFullWidth="false"
-                        app:tabMode="scrollable"
-                        app:tabTextAppearance="@style/TabLayoutTextStyle" />
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/main_scroll"
+                android:layout_width="match_parent" android:layout_height="0dp"
+                android:layout_weight="1" android:clipToPadding="false"
+                android:fillViewport="true" android:paddingStart="18dp"
+                android:paddingEnd="18dp" android:paddingBottom="18dp">
 
-                    <androidx.viewpager2.widget.ViewPager2
-                        android:id="@+id/view_pager"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:nextFocusRight="@+id/fab"
-                        android:scrollbars="vertical"
-                        android:layout_weight="1" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:gravity="center_horizontal" android:orientation="vertical">
 
-                    <LinearLayout
-                        android:id="@+id/layout_test"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/view_height_dp64"
-                        android:clickable="true"
-                        android:contentDescription="@string/connection_test_pending"
-                        android:focusable="true"
-                        android:nextFocusLeft="@+id/view_pager"
-                        android:nextFocusRight="@+id/fab"
-                        android:orientation="vertical">
-
-                        <View
-                            android:layout_width="wrap_content"
-                            android:layout_height="1dp"
-                            android:background="@color/divider_color_light" />
-
-                        <TextView
-                            android:id="@+id/tv_test_state"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="start|center"
-                            android:maxLines="2"
-                            android:minLines="1"
-                            android:paddingStart="@dimen/padding_spacing_dp16"
-                            android:text="@string/connection_test_pending"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
-
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp" android:background="@drawable/bg_glass_card"
+                        android:gravity="center_vertical" android:orientation="horizontal" android:padding="14dp">
+                        <ImageView android:layout_width="58dp" android:layout_height="58dp"
+                            android:src="@drawable/ic_glass_shield" android:contentDescription="@null"/>
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_weight="1" android:layout_marginStart="10dp" android:orientation="vertical">
+                            <TextView android:id="@+id/tv_connection_title"
+                                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="آماده اتصال" android:textColor="#52F5D9"
+                                android:textSize="22sp" android:textStyle="bold"/>
+                            <TextView android:id="@+id/tv_connection_subtitle"
+                                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:text="یک سرور انتخاب کن و دکمه وسط را بزن"
+                                android:textColor="#BFD1DC" android:textSize="13sp"/>
+                        </LinearLayout>
                     </LinearLayout>
+
+                    <FrameLayout android:layout_width="match_parent" android:layout_height="330dp" android:layout_marginTop="4dp">
+                        <ImageView android:id="@+id/map_marker" android:layout_width="78dp" android:layout_height="78dp"
+                            android:layout_gravity="top|center_horizontal" android:layout_marginTop="64dp"
+                            android:src="@drawable/ic_glass_pin" android:contentDescription="@null"/>
+                        <View android:id="@+id/pulse_ring" android:layout_width="170dp" android:layout_height="170dp"
+                            android:layout_gravity="center" android:background="@drawable/bg_pulse_ring"/>
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fab" android:layout_width="138dp" android:layout_height="138dp"
+                            android:layout_gravity="center" android:backgroundTint="#123E4C"
+                            android:clickable="true" android:contentDescription="@string/tasker_start_service"
+                            android:focusable="true" android:src="@drawable/ic_glass_power"
+                            app:borderWidth="0dp" app:elevation="14dp" app:fabCustomSize="138dp"
+                            app:maxImageSize="96dp" app:rippleColor="#5CFFFFFF" app:tint="@null"/>
+                    </FrameLayout>
+
+                    <LinearLayout android:id="@+id/layout_test" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:background="@drawable/bg_glass_card"
+                        android:clickable="true" android:focusable="true" android:gravity="center"
+                        android:orientation="horizontal" android:paddingStart="20dp" android:paddingTop="9dp"
+                        android:paddingEnd="20dp" android:paddingBottom="9dp">
+                        <View android:layout_width="9dp" android:layout_height="9dp" android:background="@drawable/bg_pulse_ring"/>
+                        <TextView android:id="@+id/tv_test_state" android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:layout_marginStart="9dp"
+                            android:text="@string/connection_test_pending" android:textColor="#E6F7FA" android:textSize="14sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout android:id="@+id/location_card" android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:layout_marginTop="18dp"
+                        android:background="@drawable/bg_glass_card" android:clickable="true"
+                        android:focusable="true" android:gravity="center_vertical"
+                        android:orientation="horizontal" android:padding="14dp">
+                        <TextView android:id="@+id/tv_flag" android:layout_width="56dp" android:layout_height="56dp"
+                            android:gravity="center" android:text="🌐" android:textSize="35sp"/>
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_weight="1" android:layout_marginStart="10dp" android:orientation="vertical">
+                            <TextView android:id="@+id/tv_country" android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:text="سرور انتخابی"
+                                android:textColor="#9FB6C4" android:textSize="13sp"/>
+                            <TextView android:id="@+id/tv_server_name" android:layout_width="match_parent"
+                                android:layout_height="wrap_content" android:ellipsize="end" android:maxLines="1"
+                                android:text="هنوز سروری انتخاب نشده" android:textColor="#FFFFFF"
+                                android:textSize="18sp" android:textStyle="bold"/>
+                            <TextView android:id="@+id/tv_protocol" android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" android:layout_marginTop="3dp"
+                                android:text="پروتکل: —" android:textColor="#51E8D1" android:textSize="12sp"/>
+                        </LinearLayout>
+                        <ImageButton android:id="@+id/btn_import_config" android:layout_width="58dp"
+                            android:layout_height="58dp" android:background="@android:color/transparent"
+                            android:contentDescription="ورود کانفیگ از کلیپ‌بورد" android:padding="2dp"
+                            android:src="@drawable/ic_glass_import"/>
+                    </LinearLayout>
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp" android:background="@drawable/bg_glass_card"
+                        android:gravity="center" android:orientation="horizontal" android:padding="10dp">
+                        <TextView android:id="@+id/tv_security" android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:layout_weight="1"
+                            android:gravity="center" android:text="🛡 حفاظت آماده"
+                            android:textColor="#D9EAF0" android:textSize="13sp"/>
+                        <TextView android:layout_width="1dp" android:layout_height="30dp" android:background="#38657B8B"/>
+                        <TextView android:id="@+id/tv_privacy" android:layout_width="0dp"
+                            android:layout_height="wrap_content" android:layout_weight="1"
+                            android:gravity="center" android:text="🔒 حریم خصوصی"
+                            android:textColor="#D9EAF0" android:textSize="13sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout android:id="@+id/server_panel" android:layout_width="match_parent"
+                        android:layout_height="410dp" android:layout_marginTop="16dp"
+                        android:background="@drawable/bg_server_panel" android:orientation="vertical"
+                        android:padding="8dp" android:visibility="gone">
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:padding="10dp" android:text="انتخاب سرور"
+                            android:textColor="#FFFFFF" android:textSize="18sp" android:textStyle="bold"/>
+                        <com.google.android.material.tabs.TabLayout
+                            android:id="@+id/tab_group" android:layout_width="match_parent"
+                            android:layout_height="wrap_content" app:tabIndicatorColor="#3EF0D4"
+                            app:tabIndicatorFullWidth="false" app:tabMode="scrollable"
+                            app:tabTextColor="#91A9B8" app:tabSelectedTextColor="#FFFFFF"/>
+                        <androidx.viewpager2.widget.ViewPager2
+                            android:id="@+id/view_pager" android:layout_width="match_parent"
+                            android:layout_height="0dp" android:layout_weight="1" android:scrollbars="vertical"/>
+                    </LinearLayout>
+                    <Space android:layout_width="1dp" android:layout_height="24dp"/>
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="88dp"
+                android:background="@drawable/bg_glass_nav" android:gravity="center"
+                android:orientation="horizontal" android:paddingStart="7dp" android:paddingEnd="7dp">
+
+                <LinearLayout android:id="@+id/btn_home" android:layout_width="0dp"
+                    android:layout_height="match_parent" android:layout_weight="1"
+                    android:clickable="true" android:focusable="true" android:gravity="center"
+                    android:orientation="vertical">
+                    <ImageView android:layout_width="48dp" android:layout_height="48dp"
+                        android:src="@drawable/ic_glass_home" android:contentDescription="@null"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="خانه" android:textColor="#4EF0D3" android:textSize="12sp"/>
                 </LinearLayout>
 
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:layout_marginBottom="-16dp"
-                    android:layout_marginEnd="@dimen/padding_spacing_dp16">
+                <LinearLayout android:id="@+id/btn_servers" android:layout_width="0dp"
+                    android:layout_height="match_parent" android:layout_weight="1"
+                    android:clickable="true" android:focusable="true" android:gravity="center"
+                    android:orientation="vertical">
+                    <ImageView android:layout_width="48dp" android:layout_height="48dp"
+                        android:src="@drawable/ic_glass_countries" android:contentDescription="@null"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="سرورها" android:textColor="#B8C8D2" android:textSize="12sp"/>
+                </LinearLayout>
 
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/fab"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|end"
-                        android:layout_marginBottom="@dimen/view_height_dp36"
-                        android:clickable="true"
-                        android:contentDescription="@string/tasker_start_service"
-                        android:focusable="true"
-                        android:nextFocusLeft="@+id/layout_test"
-                        android:src="@drawable/ic_play_24dp"
-                        app:tint="@color/colorWhite"
-                        app:useCompatPadding="true"
-                        app:layout_anchorGravity="bottom|right|end" />
+                <LinearLayout android:id="@+id/btn_connection_type" android:layout_width="0dp"
+                    android:layout_height="match_parent" android:layout_weight="1"
+                    android:clickable="true" android:focusable="true" android:gravity="center"
+                    android:orientation="vertical">
+                    <ImageView android:layout_width="48dp" android:layout_height="48dp"
+                        android:src="@drawable/ic_glass_type" android:contentDescription="@null"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="نوع اتصال" android:textColor="#B8C8D2" android:textSize="12sp"/>
+                </LinearLayout>
 
-                </FrameLayout>
-            </androidx.coordinatorlayout.widget.CoordinatorLayout>
-        </RelativeLayout>
-    </LinearLayout>
+                <LinearLayout android:id="@+id/btn_settings" android:layout_width="0dp"
+                    android:layout_height="match_parent" android:layout_weight="1"
+                    android:clickable="true" android:focusable="true" android:gravity="center"
+                    android:orientation="vertical">
+                    <ImageView android:layout_width="48dp" android:layout_height="48dp"
+                        android:src="@drawable/ic_glass_settings" android:contentDescription="@null"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="تنظیمات" android:textColor="#B8C8D2" android:textSize="12sp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
 
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/menu_drawer">
-
-    </com.google.android.material.navigation.NavigationView>
-
+        android:id="@+id/nav_view" android:layout_width="wrap_content"
+        android:layout_height="match_parent" android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header" app:menu="@menu/menu_drawer"/>
 </androidx.drawerlayout.widget.DrawerLayout>
